@@ -1,0 +1,14 @@
+***************************************
+* 1.3.- Uso de un Editor sin Gráficos *
+***************************************
+
+1) Me he decantado por la utilización de 'vim' puesto que mcedit
+  y nano ya los he utilizado mucho. En cuanto a Joe, por lo que vimos en clase,
+  he podido apreciar que comparte notables similitudes con vim pero prefiero
+  aprender los comandos de vim ya que éste es el editor por línea de comandos
+  más utilizado.
+
+2)
+  Búsqueda de palabras[2020.10.7]: Al situarte sobre una palabra y pulsar
+  asterisco,el cursor va saltando a la siguiente aparición de esa misma
+  palabra en el fichero. Muy útil para búsquedas.
