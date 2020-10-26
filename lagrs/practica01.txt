@@ -12,3 +12,15 @@
   Búsqueda de palabras[2020.10.7]: Al situarte sobre una palabra y pulsar
   asterisco,el cursor va saltando a la siguiente aparición de esa misma
   palabra en el fichero. Muy útil para búsquedas.
+
+*****************************
+*1.4.-Gestión de Contraseñas*
+*****************************
+	1) Guardo las contraseñas con GPG:
+		Con el comando 'gpg --full-gen-key' genero la cave.
+		Se me pregunta por mi nombre completo, email y tiempo
+		hasta que expire. Posteriormente, introduzco la contraseña dos veces.
+		Con el comando 'gpg --list-secret-keys' puedo ver los
+		fingerprints de todas mis claves privadas (que se encuentran
+		en el anillo de claves privadas).
+	
