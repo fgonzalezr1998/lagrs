@@ -13,7 +13,7 @@
 	2)
   	Búsqueda de palabras[2020.10.7]: Al situarte sobre una palabra
 	y pulsar asterisco, el cursor va saltando a la siguiente
-	aparición de esa misma palabra en el fichero. Muy útil 
+	aparición de esa misma palabra en el fichero. Muy útil
 	para búsquedas.
 
 *****************************
@@ -26,7 +26,7 @@
 		Con el comando 'gpg --list-secret-keys' puedo ver los
 		fingerprints de todas mis claves privadas (que se encuentran
 		en el anillo de claves privadas).
-		
+
 		Llevo a cabo la misma operación para guardar la segunda
 		contraseña.
 
@@ -44,16 +44,16 @@
 	con 4:
 		Comando -> 'ssss-split -t 4 -n 6'
 		salida:
-			Generating shares using a (4,6) scheme with dynamic security 
+			Generating shares using a (4,6) scheme with dynamic security
 			level.
-			Enter the secret, at most 128 ASCII characters: Using a 
+			Enter the secret, at most 128 ASCII characters: Using a
 			80 bit security level.
 			1-d7c94d56079d76bf0d0f
 			2-9daf830b21b3a8394171
 			3-29bf42ced1fde3df3503
 			4-59542ef8298170ff981a
 			5-3e4839c6ae7a8ddd81f7
-			6-d2375a6d673f3ed314a2	
+			6-d2375a6d673f3ed314a2
 
 	2) Recomponer la contraseña:
 		Comando -> 'ssss-combine -t 4'
@@ -65,3 +65,25 @@
 			Share [4/4]: 4-59542ef8298170ff981a
 			Resulting secret: gpg_lagrs1
 
+***************
+*1.6.- Vagrant*
+***************
+
+    1) Instalo Vagrant via "sudo apt-get install vagrant".
+    2) Creo el directorio "vagrant_project_dir" y me muevo a él.
+    3) Lanzo "vagrant init".
+    4) Ejecuto "vagrant up", lo cual me reporta el siguiente fallo:
+        'Error while connecting to libvirt: Error making a connection to libvirt
+        URI qemu:///system?no_verify=1&keyfile=/home/fernando/.ssh/id_rsa:
+        Call to virConnectOpen failed: Failed to connect socket to
+        '/var/run/libvirt/libvirt-sock': No such file or directory'.
+
+        con "apt-cache show vagrant" me percato de que la versión que he instalado
+        es la 2.0 y veo en internet que ésta es incompatible con Virtual Box 6.1,
+        que es elq ue yo tengo instalado. Por lo tanto, lod esinstalo con
+        "sudo apt-get purge --remove vagrant".
+    5) Descargo el binario de vagrant desde la página oficial (versión 2.2).
+    6) Lo muevo a /usr/bin/
+    7) Lanzo "vagrant init" y, posteriormente, "vagrant up --provider virtualbox".
+        Ahora todo funciona correctamente.
+    8) Entro a la máquina por ssh ejecutando el comando "vagrant ssh".
