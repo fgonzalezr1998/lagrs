@@ -80,7 +80,7 @@
 
         con "apt-cache show vagrant" me percato de que la versión que he instalado
         es la 2.0 y veo en internet que ésta es incompatible con Virtual Box 6.1,
-        que es el que yo tengo instalado. Por lo tanto, lod esinstalo con
+        que es el que yo tengo instalado. Por lo tanto, lo desinstalo con
         "sudo apt-get purge --remove vagrant".
     5) Descargo el binario de vagrant desde la página oficial (versión 2.2).
     6) Lo muevo a /usr/bin/
@@ -94,3 +94,39 @@
 
     10) Para apagar la máquina virtual, desde el project directory ejecuto
         "vagrant halt".
+
+*************************
+*1.7.- Usuarios y Grupos*
+*************************
+
+*****************************
+*1.9.- Instalación de Docker*
+*****************************
+	1) Desinstalo versiones anteriores de Docker con "sudo apt purge docker-*"
+	2) Miro qué versiones de Docker están disponibles en apt con
+		"apt-cache show docker.io" y veo que la última versión es:
+		"19.03.6-0ubuntu1~18.04.2".
+
+	3) Instalo la última versión disponible en apt: "sudo apt-get install
+		docker.io=19.03.6-0ubuntu1~18.04.2".
+
+	4) Ejecuto "echo 'hola, mundo'" dentro de un contenedor Debian con el
+		siguiente comando: "docker run debian echo "hola, mundo"". La salida
+		es la siguiente:
+
+		'Unable to find image 'debian:latest' locally
+		latest: Pulling from library/debian
+		e4c3d3e4f7b0: Pull complete
+		Digest: sha256:8414aa82208bc4c2761dc149df67e25c6b8a9380e5d8c4e7b5c84ca2d04bb244
+		Status: Downloaded newer image for debian:latest
+		hola, mundo'
+
+	5) Para probar holamundo en un docker de ubuntu, primero descargo la imagen
+		de Ubuntu 20.04 con el comando "docker pull ubuntu:20.04". Para comprobar
+		que se ha importado la imagen, ejecuto "docker image ls". La salida es:
+
+		'REPOSITORY            TAG                 IMAGE ID            CREATED             SIZE
+		ubuntu                20.04               d70eaf7277ea        12 days ago         72.9MB
+		debian                latest              1510e8501783        3 weeks ago         114MB'
+
+	6) Ejecuto la prueba: "docker run ubuntu:20.04 echo 'hola, mundo'".
