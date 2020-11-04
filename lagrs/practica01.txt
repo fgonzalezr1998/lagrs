@@ -70,8 +70,8 @@
 ***************
 
     1) Instalo Vagrant via "sudo apt-get install vagrant".
-    2) Creo el directorio "vagrant_project_dir" y me muevo a él.
-    3) Lanzo "vagrant init".
+    2) Creo el directorio "vbox01" y me muevo a él.
+    3) Lanzo "vagrant init ubuntu/focal64".
     4) Ejecuto "vagrant up", lo cual me reporta el siguiente fallo:
         'Error while connecting to libvirt: Error making a connection to libvirt
         URI qemu:///system?no_verify=1&keyfile=/home/fernando/.ssh/id_rsa:
@@ -80,10 +80,17 @@
 
         con "apt-cache show vagrant" me percato de que la versión que he instalado
         es la 2.0 y veo en internet que ésta es incompatible con Virtual Box 6.1,
-        que es elq ue yo tengo instalado. Por lo tanto, lod esinstalo con
+        que es el que yo tengo instalado. Por lo tanto, lod esinstalo con
         "sudo apt-get purge --remove vagrant".
     5) Descargo el binario de vagrant desde la página oficial (versión 2.2).
     6) Lo muevo a /usr/bin/
-    7) Lanzo "vagrant init" y, posteriormente, "vagrant up --provider virtualbox".
+    7) Lanzo "vagrant init ubuntu/focal64" y, posteriormente, "vagrant up
+        --provider virtualbox".
         Ahora todo funciona correctamente.
     8) Entro a la máquina por ssh ejecutando el comando "vagrant ssh".
+    9) Dentro del directorio vbox01 del host creo un fichero con el comando
+        "touch borrame". Posteriormente, en la máquina virtual, si hago un
+        "ls /vagrant", veo ese nuevo fichero.
+
+    10) Para apagar la máquina virtual, desde el project directory ejecuto
+        "vagrant halt".
