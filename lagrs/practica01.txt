@@ -69,35 +69,55 @@
 *1.6.- Vagrant*
 ***************
 
-    1) Instalo Vagrant via "sudo apt-get install vagrant".
-    2) Creo el directorio "vbox01" y me muevo a él.
-    3) Lanzo "vagrant init ubuntu/focal64".
-    4) Ejecuto "vagrant up", lo cual me reporta el siguiente fallo:
-        'Error while connecting to libvirt: Error making a connection to libvirt
-        URI qemu:///system?no_verify=1&keyfile=/home/fernando/.ssh/id_rsa:
-        Call to virConnectOpen failed: Failed to connect socket to
-        '/var/run/libvirt/libvirt-sock': No such file or directory'.
+  1) Instalo Vagrant via "sudo apt-get install vagrant".
+  2) Creo el directorio "vbox01" y me muevo a él.
+  3) Lanzo "vagrant init ubuntu/focal64".
+  4) Ejecuto "vagrant up", lo cual me reporta el siguiente fallo:
+      'Error while connecting to libvirt: Error making a connection to libvirt
+      URI qemu:///system?no_verify=1&keyfile=/home/fernando/.ssh/id_rsa:
+      Call to virConnectOpen failed: Failed to connect socket to
+      '/var/run/libvirt/libvirt-sock': No such file or directory'.
 
-        con "apt-cache show vagrant" me percato de que la versión que he instalado
-        es la 2.0 y veo en internet que ésta es incompatible con Virtual Box 6.1,
-        que es el que yo tengo instalado. Por lo tanto, lo desinstalo con
-        "sudo apt-get purge --remove vagrant".
-    5) Descargo el binario de vagrant desde la página oficial (versión 2.2).
-    6) Lo muevo a /usr/bin/
-    7) Lanzo "vagrant init ubuntu/focal64" y, posteriormente, "vagrant up
-        --provider virtualbox".
-        Ahora todo funciona correctamente.
-    8) Entro a la máquina por ssh ejecutando el comando "vagrant ssh".
-    9) Dentro del directorio vbox01 del host creo un fichero con el comando
-        "touch borrame". Posteriormente, en la máquina virtual, si hago un
-        "ls /vagrant", veo ese nuevo fichero.
+      con "apt-cache show vagrant" me percato de que la versión que he instalado
+      es la 2.0 y veo en internet que ésta es incompatible con Virtual Box 6.1,
+      que es el que yo tengo instalado. Por lo tanto, lo desinstalo con
+      "sudo apt-get purge --remove vagrant".
+  5) Descargo el binario de vagrant desde la página oficial (versión 2.2).
+  6) Lo muevo a /usr/bin/
+  7) Lanzo "vagrant init ubuntu/focal64" y, posteriormente, "vagrant up
+      --provider virtualbox".
+      Ahora todo funciona correctamente.
+  8) Entro a la máquina por ssh ejecutando el comando "vagrant ssh".
+  9) Dentro del directorio vbox01 del host creo un fichero con el comando
+      "touch borrame". Posteriormente, en la máquina virtual, si hago un
+      "ls /vagrant", veo ese nuevo fichero.
 
-    10) Para apagar la máquina virtual, desde el project directory ejecuto
-        "vagrant halt".
+  10) Para apagar la máquina virtual, desde el project directory ejecuto
+      "vagrant halt".
 
 *************************
 *1.7.- Usuarios y Grupos*
 *************************
+
+  1) Entro en la máquina virtual creada con Vagrant moviéndome al directorio
+    'vbox01' y ejecutando 'vagrant up'. Con esto, levantamos la VM.
+    Posteriormente, ejecuto 'vagrant ssh' para entrar.
+
+  2) Creo el usuario "fernando" con el comando 'adduser fernando'.
+  3) ejecuto 'su fernando' e ingreso la contraseña. Ahora, estoy logeado como
+    "fernando" en esta shell.
+  4) Trato de ejecutar 'sudo su' y el resultado es el siguiente:
+
+    "[sudo] password for fernando:
+     fernando is not in the sudoers file.  This incident will be reported."
+
+  5) Cierro sesión como "fernando" haciendo CONTROL+D en la terminal. Ahora
+    vuelvo a ser el usuario "vagrant" que sí pertenece a sudoers, por lo tanto,
+    ejecuto sudo su (aunque e este caso no es estrictamente necesario).
+    Ahora que soy root, ejecuto 'adduser fernando sudo', lo cual añade al
+    usuario "fernando" al grupo "sudo". En este momento, hago CONTROL+D y
+    después eejcuto 'su fernando' para vovler a logearme en la shell como
+    "fernando". Ahora pruebo a hacer 'sudo su' y el resultado es satisfactorio.
 
 *****************************
 *1.9.- Instalación de Docker*
