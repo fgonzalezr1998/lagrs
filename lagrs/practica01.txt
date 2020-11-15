@@ -150,3 +150,30 @@
 		debian                latest              1510e8501783        3 weeks ago         114MB'
 
 	6) Ejecuto la prueba: "docker run ubuntu:20.04 echo 'hola, mundo'".
+
+*******************************
+*1.10.- Uso Básico de Imágenes*
+*******************************
+
+  1) Creo el contenedor interactivo (sin nombre) con el comando
+    "docker run -it ubuntu:20.04 bash"
+
+  2) Dentro del contenedor interactivo, ejecuto el comando "top"
+    (monitor de procesos), creo un directorio con "touch borrame". Sin embargo,
+    no existe el comando "htop" ni ningún editor de shell (nano, vim, vi, less,
+    mcedit).
+
+  3) Ejecuto un nuevo contenedor interactivo con el nombre 'fernc01' ejecutando
+    el siguiente comando: "docker run -it --naem fernc01 ubuntu:20.04"
+
+  4) En otra terminal, listo los contenedores con el comando
+    "docker container ls" y la salida es la siguiente:
+
+    "CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+    1494121d089f        ubuntu:20.04        "/bin/bash"         3 minutes ago       Up 3 minutes                            fernc01
+    11529dc565ec        ubuntu:20.04        "bash"              6 minutes ago       Up 6 minutes                            vigorous_burnell"
+
+
+  5) Sé que el sistema de ficheros del contenedor interactivo no es persistente
+    porque si creo un fichero, salgo del contenedor y, cuando vuelvo a lanzarlo,
+    dicho fichero ya no existe.
