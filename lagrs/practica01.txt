@@ -177,3 +177,16 @@
   5) Sé que el sistema de ficheros del contenedor interactivo no es persistente
     porque si creo un fichero, salgo del contenedor y, cuando vuelvo a lanzarlo,
     dicho fichero ya no existe.
+
+************************************************
+*1.11.- Creación de una imagen de un contenedor*
+************************************************
+
+  1) He creado la cuenta con el nombre de usuario 'fgonzalezr1998'
+  2) Creo el directorio 'banner_docker' y escribo el fichero 'entrypoint.sh' al
+    que le doy permisos de ejecución.
+    Posteriormente, creo y edito el fichero 'Dockerfile'.
+
+  3) Ejecuto: "docker build -t fgonzalezr1998/banner banner_docker".
+  4) Lanzo un contenedor docker con la imagen creada con el siguiente comando:
+    "docker run -it -h c01 fgonzalezr1998/banner".
