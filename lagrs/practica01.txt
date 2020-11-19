@@ -164,7 +164,7 @@
     mcedit).
 
   3) Ejecuto un nuevo contenedor interactivo con el nombre 'fernc01' ejecutando
-    el siguiente comando: "docker run -it --naem fernc01 ubuntu:20.04"
+    el siguiente comando: "docker run -it --name fernc01 ubuntu:20.04"
 
   4) En otra terminal, listo los contenedores con el comando
     "docker container ls" y la salida es la siguiente:
@@ -179,7 +179,7 @@
     dicho fichero ya no existe.
 
 ************************************************
-*1.11.- Creación de una imagen de un contenedor*
+*1.11.- Creación de una Imagen de un Contenedor*
 ************************************************
 
   1) He creado la cuenta con el nombre de usuario 'fgonzalezr1998'
@@ -189,4 +189,54 @@
 
   3) Ejecuto: "docker build -t fgonzalezr1998/banner banner_docker".
   4) Lanzo un contenedor docker con la imagen creada con el siguiente comando:
-    "docker run -it -h c01 fgonzalezr1998/banner".
+    "docker run -it -h c01 fgonzalezr1998/banner". Efectivamente, se muestra
+    el banner.
+
+  5) Borro la imagen que hice anteriormente, modifico el fichero 'entrypoint.sh'
+    añadiendo la línea 'bash' para que ejecute dicho intérprete de comandos.
+    Posteriormente, genero la imagen 'fgonzalezr1998/banner' del mismo modo que
+    antes. Tras esto, ejecuto el contenedor cuyo resultado es que después de
+    mostrarse el banner, aparece el prompt de la shell esperando comandos.
+
+  6) Para subir este contenedor a docker Hub, ejecuto
+    "docker push fgonzalezr1998/banner".
+
+*********************************************
+*1.12.- Creación de una Imagen Personalizada*
+*********************************************
+
+  1) Preparo los ficheros 'Dockerfile', 'entrypoint.sh' y 'construye.sh'.
+  2) Ejecuto 'construye.sh' para crear la imagen. Posteriormente, me cercioro
+    con la orden "docker image ls" y veo que se ha generado:
+    "REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
+    fernando/cal            latest              7a7d18cc8a0f        7 seconds ago       108MB"
+
+  3) Preparo ambos scripts para lanzar los contenedores y los ejecuto. A
+    continuación, pongo la salida de uno de ellos:
+
+  ---Salida Shell---
+
+  root@linux-mint-pc:/home/fernando/Escritorio/Universidad/lagrs/lagrs/cal# ./lanza_ferncal01.sh
+     November 2020
+  Su Mo Tu We Th Fr Sa
+   1  2  3  4  5  6  7
+   8  9 10 11 12 13 14
+  15 16 17 18 19 20 21
+  22 23 24 25 26 27 28
+  29 30
+
+  root@linux-mint-pc:/home/fernando/Escritorio/Universidad/lagrs/lagrs/cal#
+
+  ---/Salida Shell---
+
+  4) Ejecuto "docker ps -a" y la salida es la siguiente:
+
+  ---Salida Shell---
+
+  CONTAINER ID        IMAGE                   COMMAND                 CREATED             STATUS                         PORTS               NAMES
+  fe7c30cf7c2e        fernando/cal            "/entrypoint.sh"        10 seconds ago      Exited (0) 6 seconds ago                           ferncal02
+  5ef3b29a9d6a        fernando/cal            "/entrypoint.sh"        4 minutes ago       Exited (0) 4 minutes ago                           ferncal01
+
+  ---Salida Shell---
+
+  5) "docker images" me ofrece la misma salida que "docker image ls" usado anteriormente.
