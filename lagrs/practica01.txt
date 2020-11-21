@@ -240,3 +240,45 @@
   ---Salida Shell---
 
   5) "docker images" me ofrece la misma salida que "docker image ls" usado anteriormente.
+
+*********************
+*1.13.- FreeFileSync*
+*********************
+
+  1) Abro una sesión SSH a mi cuenta del laboratorio y, en la ruta indicada,
+    creo el fichero 'prueba.txt'.
+  2) En mi casa, abro FreeFileSync, indico los directorios que quiero comparar
+    tanto en mi máquina local como en la remota y clickeo sobre "comparar".
+
+  3) Una vez que veo cuáles son todos los cambios que habría que hacer en ambos
+    directorios para que estén sincronizados, llevo a cabo la sincronización.
+
+  4) Realizo cambios en local y vuelvo a comparar. Llevo a cabo la
+    sincronización.
+
+**********************************
+*1.14 Conflictos con FreeFileSync*
+**********************************
+
+  1) Realizo cambios sobre 'prueba.txt' en mi casa.
+  2) Sin sincronizar, hago cambios en el fichero de la máquina remota.
+  3) Comparo. Efectivamente, se muestran conflictos.
+  4) Resuelvo el conflicto indicando que los cambios que quiero que prevalezcan
+    sean los que hice en mi máquina local (de casa). Realizo la
+    sincronización y ya no se muestra ningún conflicto.
+*************************
+*1.22.- Benchmark de CPU*
+*************************
+
+  1) Para saber los BogoMIPS que posee mi ordenador debemos inspeccionar en el
+    búffer de mensajes del Kernel del sistema operativo. Esto lo hacemos con el
+    comando "dmesg". Pero, como buscamos una cadena en concreto ('BogoMIPS') y
+    así no tener que buscar entre todas los mensajes, la salida de "dmesg" se
+    la introducimos a "grep" mediante un pipe. Te este modo, tendríamos el
+    siguiente comando. "dmesg | grep BogoMIPS".
+
+  2) El comando anterior lo introduzco en la terminal tanto de la máquina del
+    laboratorio como en mi PC de sobremesa de casa. Los resultados son los
+    siguientes:
+      Laboratorio:  25599.84 BogoMIPS
+      Casa:        108786.24 BogoMIPS
