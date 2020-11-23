@@ -266,6 +266,37 @@
   4) Resuelvo el conflicto indicando que los cambios que quiero que prevalezcan
     sean los que hice en mi máquina local (de casa). Realizo la
     sincronización y ya no se muestra ningún conflicto.
+
+*********************
+*1.18.- Montaje Bind*
+*********************
+
+  1) Creo todos los ficheros necesarios:
+    ---Dockerfile---
+      FROM ubuntu:20.04
+      RUN apt-get update && apt-get upgrade -y
+      COPY entrypoint.sh /
+      RUN useradd -d /home/fernando -s /bin/bash -rm -u 1001 fernando
+      WORKDIR /home/fernando
+      ENTRYPOINT ["/entrypoint.sh"]
+
+    ---entrypoint.sh---
+      bash
+
+    ---construye.sh---
+      docker build -t fernando/bind context
+
+    ---lanza_fernbind01.sh---
+      docker run -it -h fernbind01 --name fernbind01 -v /home/fernando:/home/fernando fernando/bind
+
+  2) Creo la imagen con "./construye.sh".
+  3) Lanzo el contenedor con "./lanza_fernbind01.sh".
+  4) En el home, creo el fichero con "touch hola_fernando".
+  5) Veo que en el home de mi host se ha creado ese mismo fichero.
+  6) Salgo del contenedor y lo borro con "docker rm [id]".
+  7) Lanzo de nuevo el contenedor con "./lanza_fernbind01.sh" y, efectivamente,
+    el fichero persiste.
+
 *************************
 *1.22.- Benchmark de CPU*
 *************************
