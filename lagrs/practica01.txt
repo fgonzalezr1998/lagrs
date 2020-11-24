@@ -364,6 +364,55 @@
   3) Además, con el comando "ssh fernando@lab1" puedo acceder por ssh al
     laboratorio.
 
+****************************************
+*1.21.- Conectividad entre Contenedores*
+****************************************
+
+  1) Creo los ficheros:
+
+    ---Dockerfile---
+      FROM ubuntu:20.04
+      RUN apt-get update && apt-get upgrade -y && \
+      apt-get install net-tools -y && \
+      apt-get install iputils-ping -y && \
+      apt-get install dnsutils -y && \
+      apt-get install ssh openssh-client -y && \
+      apt-get install locales -y && \
+      localedef -i es_ES -c -f UTF-8 \
+      -A /usr/share/locale/locale.alias es_ES.UTF-8
+      ENV LANG es_ES.UTF-8
+      COPY entrypoint.sh /
+      COPY delta_hosts /
+      ENTRYPOINT ["/entrypoint.sh"]
+
+    ---entrypoint.sh---
+      #! /bin/sh
+
+      cat delta_hosts >> /etc/hosts
+      bash
+
+    ---construye.sh---
+      #! /bin/sh
+
+      docker build --force-rm -t fernando/cab context
+
+    ---lanza_ferncab01.sh---
+      #! /bin/sh
+
+      docker run --rm -it -h ferncab01 --name ferncab01 fernando/cab
+
+  2) Creo la imagen y lanzo ambos contenedores.
+  3) En ferncab01 instalo el comando fping haciendo "apt-get install fping".
+  4) para descubrir las máquinas de mi subred hago uso del comando
+    "fping -c 1 -g 172.17.0.0/24". De este modo veo que hay trs IP's:
+    172.17.0.1 (Esta es la del bridge)
+    172.17.0.2
+    172.17.0.3 (esta es la mía)
+
+    Por lo tanto, 172.17.0.2 es la IP del contenedor 'ferncab01'. Hago un ping
+    hacia ella y todo funciona correctamente. Es decir, hay comunicación
+    entre los contenedores.
+
 *************************
 *1.22.- Benchmark de CPU*
 *************************
