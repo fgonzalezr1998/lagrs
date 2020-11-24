@@ -257,7 +257,7 @@
     sincronización.
 
 **********************************
-*1.14 Conflictos con FreeFileSync*
+*1.14.- Conflictos con FreeFileSync*
 **********************************
 
   1) Realizo cambios sobre 'prueba.txt' en mi casa.
@@ -266,6 +266,28 @@
   4) Resuelvo el conflicto indicando que los cambios que quiero que prevalezcan
     sean los que hice en mi máquina local (de casa). Realizo la
     sincronización y ya no se muestra ningún conflicto.
+
+****************************
+*1.15.- SSH sin Contraseñas*
+****************************
+
+  1) Genero el par de claves pública y privada (rsa) en mi máquina local
+    haciendo uso del comando "ssh-keygen".
+
+  2) Veo que la clave pública se guarda cifrada con AES-128 en modo CBC y
+    aplanada en Base64 en el fichero ~/.ssh/id_rsa. La clave pública se guarda
+    en el fichero ~/.ssh/id_rsa.pub
+
+  3) Llevo el fichero con la clave pública a la máquina remota
+    ($HOME/.ssh/id_rsa.pub) haciendo uso de'scp'. Posteriormente, renombro este
+    fichero a "authorized_keys" en la máquina remota.
+
+  4) Cambio los permisos en local y en remoto de los ficheros contenidos
+    en .ssh a 600.
+
+  5) Ejecuto ssh al laboratorio y, se me pide la contraseña para desbloquear
+    el anillo de claves de ssh. Posteriormente, se abre la sesión ssh sin
+    necesidad de introducir contraseñas.
 
 *********************
 *1.18.- Montaje Bind*
@@ -296,6 +318,12 @@
   6) Salgo del contenedor y lo borro con "docker rm [id]".
   7) Lanzo de nuevo el contenedor con "./lanza_fernbind01.sh" y, efectivamente,
     el fichero persiste.
+
+*************
+*1.19.- SSHFS*
+*************
+
+
 
 *************************
 *1.22.- Benchmark de CPU*
