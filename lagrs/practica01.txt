@@ -323,7 +323,46 @@
 *1.19.- SSHFS*
 *************
 
+  1) Creo el script 'monta_tmp.bash' y haciendo uso de él, monto los tres
+    sistemas de ficheros.
 
+  2) En otra terminal, entro por SSH a una de las máquinas y creo el fichero
+    '/tmp/borrame'. En mi máquina local, en './tmp01/', también ha aparecido
+    dicho fichero.
+
+*************************************
+*1.20.- Contenedor con Fichero hosts*
+*************************************
+
+  1) Creo todos los ficheros oportunos:
+    ---Dockerfile---
+      FROM ubuntu:20.04
+      RUN apt-get update && apt-get upgrade -y && apt-get install net-tools -y && \
+      apt-get install iputils-ping -y
+      RUN apt-get install ssh openssh-client -y
+      COPY entrypoint.sh /
+      COPY delta_hosts /
+      ENTRYPOINT ["/entrypoint.sh"]
+
+    ---entrypoint.sh---
+      #! /bin/sh
+      cat delta_hosts >> /etc/hosts
+      ping -c 5 lab1
+      bash
+
+    ---construye.sh---
+      #! /bin/sh
+
+      docker build --force-rm -t fernando/caa context
+
+    ---lanza_ferncaa01.sh---
+      #! /bin/sh
+
+      docker run -it --rm -h ferncaa01 --name ferncaa01 fernando/caa
+
+  2) Lanzo el docker y se realizan los pings.
+  3) Además, con el comando "ssh fernando@lab1" puedo acceder por ssh al
+    laboratorio.
 
 *************************
 *1.22.- Benchmark de CPU*
