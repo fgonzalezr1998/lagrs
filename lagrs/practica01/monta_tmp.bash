@@ -3,7 +3,7 @@
 print_usage() {
     echo "Usage:"
     echo -e "\t./monta_tmp.sh [Option] [user]"
-    echo -r "\t user: user of remote machine"
+    echo -e "\tuser: user of remote machine"
     echo "Option:"
     echo -e "\t -h: Print help"
 }
@@ -15,8 +15,7 @@ make_sshfs() {
 
     if [ -d "tmp0$3" ]
     then
-        umount -f tmp0$3 2> /dev/null
-        rm -rf tmp0$3
+        umount -f tmp0$3 2> /dev/null && rm -rf tmp0$3
     fi
 
     mkdir tmp0$3
@@ -82,7 +81,3 @@ else
     print_usage
     exit 1
 fi
-
-# Declare
-
-#sshfs $USER@$remote_machine:/tmp
