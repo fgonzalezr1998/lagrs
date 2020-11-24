@@ -15,10 +15,11 @@ make_sshfs() {
 
     if [ -d "tmp0$3" ]
     then
-        umount -f tmp0$3 2> /dev/null && rm -rf tmp0$3
+        sudo umount -f tmp0$3 2> /dev/null && sudo rm -rf tmp0$3
     fi
 
     mkdir tmp0$3
+    chmod -R 777 tmp0$3
 
     sshfs $2@$1:/tmp ./tmp0$3 2> /dev/null
     if [ $? -ne 0 ]
@@ -45,14 +46,6 @@ main() {
         j=$(($j + 1))
     done
 }
-
-# If not root, do nothing
-
-if [ "$EUID" -ne 0 ]
-then
-    echo "Execute with sudo!"
-    exit 1
-fi
 
 # Parse options and arguments:
 
