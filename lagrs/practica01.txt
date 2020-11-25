@@ -3,18 +3,30 @@
 ***************************************
 
 	1) Me he decantado por la utilización de 'vim' puesto que mcedit
-	y nano ya los he utilizado mucho. En cuanto a Joe, por lo que
-	vimos en clase,
-  	he podido apreciar que comparte notables similitudes con vim pero
-	prefiero
-  	aprender los comandos de vim ya que éste es el editor por línea de
-	comandos más utilizado.
+  	y nano ya los he utilizado mucho. En cuanto a Joe, por lo que
+  	vimos en clase, he podido apreciar que comparte notables similitudes con
+    vim pero prefiero aprender los comandos de vim ya que éste es el editor por
+    línea de comandos más utilizado.
 
 	2)
   	Búsqueda de palabras[2020.10.7]: Al situarte sobre una palabra
-	y pulsar asterisco, el cursor va saltando a la siguiente
-	aparición de esa misma palabra en el fichero. Muy útil
-	para búsquedas.
+  	y pulsar asterisco, el cursor va saltando a la siguiente
+  	aparición de esa misma palabra en el fichero. Muy útil
+  	para búsquedas.
+
+    Ir al inicio [2020.10.12]: Con el comando "gg" el cursor se coloca al inicio
+    del fichero.
+
+    Ir al final [2020.10.16]: Con Mayus+g, el cursos se posiciona en la última
+    línea del fichero.
+
+    Mostras el número de línea [2020.10.21]: Con el comando ":set number", se
+    muestra el número de las líneas.
+
+    Borrar líneas completas [2020.11.2]: Con el comando "dd" se borra la línea
+    completa en la que el cursor está situado.
+
+    Ayuad de Vim [2020.11.7]: Con el comando ":h" se abre la ayuda de Vim.
 
 *****************************
 *1.4.-Gestión de Contraseñas*
@@ -33,8 +45,7 @@
 	2) Guardo las contraseñas con LibreOffice:
 		Abro Writer (LibreOffice) y guardo ambas contraseñas.
 
-	3) Guardo las contraseñas con KeepassX:
-
+	3) Guardo las contraseñas con KeepassX.
 
 **********************
 *1.5.- Secret Sharing*
@@ -118,6 +129,36 @@
     usuario "fernando" al grupo "sudo". En este momento, hago CONTROL+D y
     después eejcuto 'su fernando' para vovler a logearme en la shell como
     "fernando". Ahora pruebo a hacer 'sudo su' y el resultado es satisfactorio.
+
+*************
+*1.8.- Split*
+*************
+
+  1) Exporto la imagen como .ova desde la interfaz gráfica de Virtual Box.
+  2) Calculo su hash MD5 y la guardo en '~/lagrs/practica01/split_tmp/README.txt'.
+    Esto lo hago con el siguiente comando: "md5sum vbox_vagrant.ova > README.txt".
+
+  3) Con el comando "tar -cvzf vbox_vagrant.tgz split_tmp/" comprimo el
+    directorio 'split_tmp' y genero el fichero 'vbox_vagrant.tgz'
+
+  4) Divido el fichero .tgz en trozos de 300MB con el siguiente comando:
+    "split -b 300MB vbox_vagrant.tgz vbox_vagrant.tgz.". Se generan dos ficheros
+    de 300MB y un tercero más pequeño, ya que el original ocupaba algo más de
+    700MB.
+
+  5) Destruyo la VM desde vagrant haciendo "vagrant destroy" desde su
+    directorio ('vbox01').
+
+  6) Borro todo salvo el fichero con la hash y los trozos.
+  7) Reconstruyo el .tgz con el comando
+    "cat vbox_vagrant.tgz.* > vbox_vagrant.tgz".
+
+  8) Descomprimo el .tgz con "tar -xvzf vbox_vagrant.tgz". Realizo de nuevo la
+    hash MD5 sobre el .ova y coincide con la que está almacenada en
+    'README.txt'.
+
+  9) Importo el .ova y haciendo uso de vagrant, desde el directorio 'vbox01'
+    ejecuto "vagrant up". Todo funciona correctamente.
 
 *****************************
 *1.9.- Instalación de Docker*
@@ -429,3 +470,20 @@
     siguientes:
       Laboratorio:  25599.84 BogoMIPS
       Casa:        108786.24 BogoMIPS
+
+*************************
+*1.23.- Benchmark de Red*
+*************************
+
+  1º En local:
+    1) En una terminal lanzo "iperf -s"
+    2) En otra terminal lanzo "iperf -c localhost"
+    3) El resultado de ancho de banda que arroja iperf es de 32.9 Gbits/sec.
+
+  2º Entre máquinas del Laboratorio:
+
+    1) Inicio sesión SSH en dos máquinas distintas del laboratorio.
+    2) En una lanzo iperf comos ervidor y el otra como cliente (especificando
+      la dirección IP de la primera máquina).
+
+    3) El resultado es 737 Mbits/sec
