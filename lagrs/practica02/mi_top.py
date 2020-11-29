@@ -7,7 +7,6 @@
 
 import subprocess
 import sys
-import math
 
 # Consts:
 MinCPU = 0.0
