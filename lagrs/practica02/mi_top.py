@@ -31,7 +31,7 @@ def print_processes(procs):
             cpu_per = cpu_per + float(l[CPUField])
             print('{:>20s}{:>10}{:>10}{:>15}'.format(
                 l[CMDField], l[PIDField], l[USERField], l[CPUField]))
-    pi = 3.1416
+
     print("\n\tMostrando " + str(nprocs), "procesos que consumen el " +
         f"{cpu_per:.2f}" + "% de la CPU")
 
