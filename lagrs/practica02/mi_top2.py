@@ -6,6 +6,7 @@
 ##################################
 
 import subprocess
+from optparse import OptionParser
 import sys
 
 # Consts:
@@ -15,6 +16,11 @@ USERField = 2
 CPUField = 9
 CMDField = 12
 EndHeaderTop = 6
+
+def add_options(parser):
+    parser.add_option("-u", "--user",
+        help="User whose processes ou have to list. By default, all are taken",
+        default="all")
 
 def print_processes(procs):
     '''
@@ -34,10 +40,23 @@ def print_processes(procs):
     print("\n\tMostrando " + str(nprocs), "procesos que consumen el " +
         f"{cpu_per:.2f}" + "% de la CPU")
 
-def main(args=None):
+def get_command(opts):
+    cmd = ['top', '-n', '1']
+
+    if (opts.user != "all"):
+        print("jeje")
+        cmd.append('-u')
+        cmd.append(opts.user)
+
+    return cmd
+
+def run_command(opts):
     command = "top -n 1"
+
+    command = get_command(opts)
+
     try:
-        stdout = subprocess.run(command.split(), check=True,
+        stdout = subprocess.run(command, check=True,
             stdout=subprocess.PIPE)
     except subprocess.CalledProcessError as err:
         print('ERROR:', err)
@@ -48,6 +67,15 @@ def main(args=None):
     print_processes(output[EndHeaderTop:])
 
     sys.exit(0)
+
+def main(args=None):
+    parser = OptionParser()
+
+    add_options(parser)
+
+    (options, args) = parser.parse_args(args)
+
+    run_command(options)
 
 if __name__ == "__main__":
     main(sys.argv)
