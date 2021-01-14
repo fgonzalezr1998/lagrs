@@ -34,7 +34,7 @@ class MyTelegramBot():
     def step(self):
         self.r_lock.acquire()
         received = self.msg_received
-        self.r_lock.acquire()
+        self.r_lock.release()
 
         if (received):
             self.w_lock.acquire()
@@ -43,7 +43,7 @@ class MyTelegramBot():
 
             self.r_lock.acquire()
             id = self.chat_id
-            self.r_lock.acquire()
+            self.r_lock.release()
 
             self.bot.sendMessage(id, self.__random_msg())
 
