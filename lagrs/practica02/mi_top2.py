@@ -19,8 +19,12 @@ EndHeaderTop = 6
 
 def add_options(parser):
     parser.add_option("-u", "--user",
-        help="User whose processes ou have to list. By default, all are taken",
+        help="User whose processes you have to list. By default, all are taken",
         default="all")
+
+    parser.add_option("-U", "--User",
+        help="Display only processes with users not matching the one provided",
+        default="none")
 
 def print_processes(procs):
     '''
@@ -44,15 +48,15 @@ def get_command(opts):
     cmd = ['top', '-n', '1']
 
     if (opts.user != "all"):
-        print("jeje")
         cmd.append('-u')
         cmd.append(opts.user)
-
+    elif (opts.User != "none"):
+        cmd.append('-u')
+        cmd.append("!" + opts.User)
+    print(cmd)
     return cmd
 
 def run_command(opts):
-    command = "top -n 1"
-
     command = get_command(opts)
 
     try:
