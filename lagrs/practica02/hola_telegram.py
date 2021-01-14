@@ -12,13 +12,6 @@ import threading
 import random
 from telepot.loop import MessageLoop
 
-BotToken = '1582190955:AAE4AAE3pxe8BzMquowngP0EZr4emhrCh3I'
-
-bot = telepot.Bot(BotToken)
-
-chat_id = ''
-
-
 class MyTelegramBot():
     def __init__(self):
         self.token = self.__get_token()
@@ -87,6 +80,7 @@ class MyTelegramBot():
         '''
         The first written line is the token
         '''
+
         try:
             file = open('token.txt', 'r')
         except FileNotFoundError:
