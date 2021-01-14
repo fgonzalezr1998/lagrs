@@ -20,18 +20,8 @@ class MyTelegramBot():
         self.chat_id = None
         self.msg_received = False
 
-        self.random_replies = [
-            "Hola, me llamo Iñigo Montoya, tú mataste a mi padre, \
-            prepárate a morir",
-            "Yo soy tu padre",
-            "Mi nombre es Bond, James Bond",
-            "Ayúdame, Obi-Wan Kenobi… eres mi única esperanza",
-            "Mi mamá siempre me decía que la vida era como una caja de bombones: nunca sabes lo que te va a tocar",
-            "Un mago nunca llega tarde, ni pronto: llega exactamente cuando se lo propone",
-            "Me llamo Máximo Décimo Meridio, general de los ejércitos del \
-            norte, capitán de las legiones medias, leal servidor del verdadero \
-            emperador Marco Aurelio… marido de una mujer asesinada… padre de un hijo asesinado… y tomaré mi venganza en esta vida o en la otra"
-            ]
+        self.random_replies = []
+        self.__set_tandom_replies()
 
         # Read/Write Locks:
 
@@ -58,6 +48,23 @@ class MyTelegramBot():
             self.bot.sendMessage(id, self.__random_msg())
 
     # Private Methods:
+
+    def __set_tandom_replies(self):
+        self.random_replies = [
+            "Hola, me llamo Iñigo Montoya, tú mataste a mi padre, \
+            prepárate a morir",
+            "Yo soy tu padre",
+            "Eres el kernel de mi linux",
+            "Mi nombre es Bond, James Bond",
+            "Ayúdame, Obi-Wan Kenobi… eres mi única esperanza",
+            "Mi mamá siempre me decía que la vida era como una caja de bombones: nunca sabes lo que te va a tocar",
+            "Un mago nunca llega tarde, ni pronto: llega exactamente cuando se lo propone",
+            "Los programas deben ser escritos para que la gente los lea y sólo accidentalmente, para que las máquinas los ejecuten",
+            "Me llamo Máximo Décimo Meridio, general de los ejércitos del \
+            norte, capitán de las legiones medias, leal servidor del verdadero \
+            emperador Marco Aurelio… marido de una mujer asesinada… padre de un hijo asesinado… y tomaré mi venganza en esta vida o en la otra",
+            "Que la Fuerza te acompañe"
+            ]
 
     def __random_msg(self):
         return random.choice(self.random_replies)
