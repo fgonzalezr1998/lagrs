@@ -40,7 +40,7 @@ def main(args=None):
         stdout = subprocess.run(command.split(), check=True,
             stdout=subprocess.PIPE)
     except subprocess.CalledProcessError as err:
-        print('ERROR:', err)
+        print('[ERROR] ' + err)
         sys.exit(1)
 
     output = stdout.stdout.decode('utf-8').split('\n')

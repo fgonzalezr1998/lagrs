@@ -5,30 +5,30 @@
 # login: fernando                #
 ##################################
 
+# WARNING! This program is potentially DANGEROUS!
+
 import sys
 import time
 import telepot
 import threading
-import random
+import subprocess
 from telepot.loop import MessageLoop
 
-class MyTelegramBot():
+class TelegramShell():
     def __init__(self):
         self.token = self.__get_token()
         self.bot = telepot.Bot(self.token)
-        self.client_id = '736350606'
         self.chat_id = None
         self.msg_received = False
+        self.cmd_received = None
 
-        self.random_replies = []
-        self.__set_tandom_replies()
+        self.cmds_timeout = 0.5
 
         # Read/Write Locks:
 
         self.r_lock = threading.RLock()
         self.w_lock = threading.Lock()
 
-        self.__send_hello()
         MessageLoop(self.bot, self.__callback).run_as_thread()
 
     def step(self):
@@ -45,32 +45,45 @@ class MyTelegramBot():
             id = self.chat_id
             self.r_lock.release()
 
-            self.__send_msg(id, self.__random_msg())
+            self.__reply(id)
 
     # Private Methods:
 
-    def __set_tandom_replies(self):
-        self.random_replies = [
-            "Hola, me llamo Iñigo Montoya, tú mataste a mi padre, \
-            prepárate a morir",
-            "Yo soy tu padre",
-            "Eres el kernel de mi linux",
-            "Mi nombre es Bond, James Bond",
-            "Ayúdame, Obi-Wan Kenobi… eres mi única esperanza",
-            "Mi mamá siempre me decía que la vida era como una caja de bombones: nunca sabes lo que te va a tocar",
-            "Un mago nunca llega tarde, ni pronto: llega exactamente cuando se lo propone",
-            "Los programas deben ser escritos para que la gente los lea y sólo accidentalmente, para que las máquinas los ejecuten",
-            "Me llamo Máximo Décimo Meridio, general de los ejércitos del \
-            norte, capitán de las legiones medias, leal servidor del verdadero \
-            emperador Marco Aurelio… marido de una mujer asesinada… padre de un hijo asesinado… y tomaré mi venganza en esta vida o en la otra",
-            "Que la Fuerza te acompañe"
-            ]
+    def __reply(self, target_id):
+        # Get the command:
 
-    def __random_msg(self):
-        return random.choice(self.random_replies)
+        self.r_lock.acquire()
+        cmd = self.cmd_received
+        print("cmd: " + cmd)
+        self.r_lock.release()
 
-    def __send_hello(self):
-        self.__send_msg(self.client_id, "Hola Mundo :)")
+        # Run command:
+
+        output = self.__run_cmd(cmd)
+
+        print("output: " + output)
+
+        self.__send_msg(target_id, output)
+
+    def __run_cmd(self, cmd):
+        output = ''
+        try:
+            stdout = subprocess.run(cmd.split(), check=True,
+                stdout=subprocess.PIPE, timeout=self.cmds_timeout)
+            stdout = stdout.stdout.decode('utf-8').split('\n')
+            for i in stdout:
+                output = output + i + '\n'
+
+        except FileNotFoundError as err:
+            print('[ERROR] ', err)
+            output = "[BOT] The command does not exist or you can not run this command remotelly"
+        except subprocess.CalledProcessError as err:
+            print('[ERROR] ', err)
+            output = "[BOT] The command returned a failure status or Something wrong happened"
+        except subprocess.TimeoutExpired:
+            output = "[BOT] Blocking commands are not allowed!"
+
+        return output
 
     def __send_msg(self, target_id, msg):
         try:
@@ -79,27 +92,30 @@ class MyTelegramBot():
             sys.stderr.write("[ERROR] Invalid Token!\n")
             sys.exit(1)
 
-    def __callback(self, msg):
-        self.w_lock.acquire()
-        self.msg_received = True
-        self.w_lock.release()
+        except telepot.exception.TelegramError as err:
+            warning = "[WARNING] " + err.description
+            print(warning)
+            self.bot.sendMessage(target_id, warning)
 
+    def __print_request_log(self, msg, st):
+        for key in msg:
+            if (isinstance(msg[key], dict)):
+                print(key)
+                self.__print_request_log(msg[key], st + '\t')
+            else:
+                print(st + key + ": ", msg[key])
+
+    def __callback(self, msg):
         chat_id = msg["chat"]["id"]
 
         self.w_lock.acquire()
         self.chat_id = chat_id
+        self.cmd_received = msg["text"]
+        self.msg_received = True
         self.w_lock.release()
 
-        self.__print_log(msg, '')
+        self.__print_request_log(msg, '')
         print("-------------------")
-
-    def __print_log(self, msg, st):
-        for key in msg:
-            if (isinstance(msg[key], dict)):
-                print(key)
-                self.__print_log(msg[key], st + '\t')
-            else:
-                print(st + key + ": ", msg[key])
 
     def __get_token(self):
         '''
@@ -122,11 +138,11 @@ class MyTelegramBot():
         sys.exit(1)
 
 def main(args=None):
-    telegram_bot = MyTelegramBot()
+    telegram_sh = TelegramShell()
 
     try:
         while (True):
-            telegram_bot.step()
+            telegram_sh.step()
             time.sleep(0.1)
     except KeyboardInterrupt:
         pass
