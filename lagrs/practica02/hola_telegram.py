@@ -45,7 +45,7 @@ class MyTelegramBot():
             id = self.chat_id
             self.r_lock.release()
 
-            self.bot.sendMessage(id, self.__random_msg())
+            self.__send_msg(id, self.__random_msg())
 
     # Private Methods:
 
@@ -70,7 +70,15 @@ class MyTelegramBot():
         return random.choice(self.random_replies)
 
     def __send_hello(self):
-        self.bot.sendMessage(self.client_id, "Hola Mundo :)")
+        self.__send_msg(self.client_id, "Hola Mundo :)")
+
+    def __send_msg(self, target_id, msg):
+        try:
+            self.bot.sendMessage(target_id, msg)
+        except telepot.exception.UnauthorizedError:
+            print('yes')
+            sys.stderr.write("[ERROR] Invalid Token!\n")
+            sys.exit(1)
 
     def __callback(self, msg):
         self.w_lock.acquire()
