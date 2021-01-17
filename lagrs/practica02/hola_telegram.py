@@ -83,6 +83,17 @@ class MyTelegramBot():
         self.chat_id = chat_id
         self.w_lock.release()
 
+        self.__print_log(msg, '')
+        print("-------------------")
+
+    def __print_log(self, msg, st):
+        for key in msg:
+            if (isinstance(msg[key], dict)):
+                print(key)
+                self.__print_log(msg[key], st + '\t')
+            else:
+                print(st + key + ": ", msg[key])
+
     def __get_token(self):
         '''
         The first written line is the token
