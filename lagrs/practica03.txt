@@ -1,0 +1,23 @@
+******************************
+*3.1.- Invocación de la Shell*
+******************************
+
+1) '.bashrc' es un fichero de configuración específico del intérprete 'bash'
+  para "non-login" shells.
+  En ausencia de un fichero de configuración propio, la shell ejecuta
+  '.profile'.
+
+**************
+*3.3.- Recode*
+**************
+
+2) Con el comando 'file -i [fichero]' pdemos ver el charset de dicho fichero. En
+  ambos casos, las alida del comando es "text/plain; charset=utf-8", es decir,
+  codificación UTF-8.
+
+3) Puedo saber la codificación por defecto empleada en mi máquina mostrando el
+  contenido de la variable de entorno 'LANG'. por tanto, 'echo $LANG' arroja:
+  "es_ES.UTF-8", en este caso.
+
+4) con el comando 'cat f1.txt | recode utf-8..latin-1 > f1.latin1.txt', genero el
+  fichero "f1_mod.txt" cuyo contenido es la modificación del fichero "f1.txt".
