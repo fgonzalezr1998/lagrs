@@ -115,7 +115,7 @@ class MyTelegramBot():
         for line in file.readlines():
             if (line != '\n'):
                 file.close()
-                return line
+                return line[:len(line) - 1]
         file.close()
 
         sys.stderr.write("[ERROR] No token found!\n")
