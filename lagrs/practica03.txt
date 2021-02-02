@@ -21,3 +21,27 @@
 
 4) con el comando 'cat f1.txt | recode utf-8..latin-1 > f1.latin1.txt', genero el
   fichero "f1_mod.txt" cuyo contenido es la modificación del fichero "f1.txt".
+
+**************
+*3.4.- Nestat*
+**************
+
+Al ejecutar netstat en el laboratorio, veo una línea como esta:
+
+tcp        0     36 212.128.254.3:22        79.157.33.81:38154      ESTABLISHED -
+
+Al ejecutarlo en mi máquina local, veo la siguiente línea:
+
+tcp        0      0 ubuntuHDD-fer:38154     f-l2108-pc01.aulas.:ssh ESTABLISHED 50144/ssh
+
+
+Efectivamente, si ejecuto en local 'curl ifconfig.me', veo qe la IP pública de
+mi router es: 79.157.33.81
+
+************
+*3.7.- Cron*
+************
+
+1) La línea añadida en cron es:
+
+* * * * * touch /tmp/test_cron_fernando

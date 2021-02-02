@@ -1,0 +1,13 @@
+#! /bin/bash
+
+FILEPATH=~/lagrs/
+FILENAME=log.txt
+DAY=`date +"%d/%m/%Y"`
+HOUR=`date +"%H:%M"`
+
+if [ ! -d $FILEPATH ]
+then
+  mkdir $FILEPATH
+fi
+
+echo [$DAY $HOUR] probando cron >> $FILEPATH$FILENAME
