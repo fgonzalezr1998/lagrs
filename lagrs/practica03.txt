@@ -35,7 +35,7 @@ Al ejecutarlo en mi máquina local, veo la siguiente línea:
 tcp        0      0 ubuntuHDD-fer:38154     f-l2108-pc01.aulas.:ssh ESTABLISHED 50144/ssh
 
 
-Efectivamente, si ejecuto en local 'curl ifconfig.me', veo qe la IP pública de
+Efectivamente, si ejecuto en local 'curl ifconfig.me', veo que la IP pública de
 mi router es: 79.157.33.81
 
 ************
@@ -45,3 +45,13 @@ mi router es: 79.157.33.81
 1) La línea añadida en cron es:
 
 * * * * * touch /tmp/test_cron_fernando
+
+2) Añado la siguiente línea en cron que hace que se ejecute
+  el script cada minuto:
+
+* * * * * ~/lagrs/practica03/escribe_log
+
+3) añado la siguiente línea en cron que hace que se ejecute el script de lunes
+  a viernes a las 9:00 de la mañana:
+
+0 9 * * 1-5 ~/lagrs/practica03/escribe_log
