@@ -22,6 +22,18 @@
 4) con el comando 'cat f1.txt | recode utf-8..latin-1 > f1.latin1.txt', genero el
   fichero "f1_mod.txt" cuyo contenido es la modificación del fichero "f1.txt".
 
+************
+*3.5.- tmux*
+************
+
+Me conecto por ssh al laboratorio y ejecuto tmux. Una vez dentro de tmux,
+ejecuto el script. Saldo de tmux con <bind> d. Salgo de la conexión ssh.
+
+Vuelvo a entrar por ssh y ejecuto 'tmux attach', lo cual me ingresa en la
+sesión que ya estaba cerada anteriormente de tmux. Compruebo que el script
+sigue ene jecución. Abro un nuevo panel con <bind> % y hago un 'tail -f'
+y compruebo que se está escribiendo "tic tac" en el log.
+
 **************
 *3.4.- Nestat*
 **************
