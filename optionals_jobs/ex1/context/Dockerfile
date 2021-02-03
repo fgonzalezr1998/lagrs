@@ -7,5 +7,7 @@ apt-get install sshfs -y && \
 apt-get install -f -y
 
 COPY entrypoint.sh /
+COPY id_rsa /root/.ssh/
+COPY id_rsa.pub /root/.ssh/
 
 ENTRYPOINT ["/entrypoint.sh"]
