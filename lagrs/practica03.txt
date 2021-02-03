@@ -38,6 +38,17 @@ tcp        0      0 ubuntuHDD-fer:38154     f-l2108-pc01.aulas.:ssh ESTABLISHED 
 Efectivamente, si ejecuto en local 'curl ifconfig.me', veo que la IP pública de
 mi router es: 79.157.33.81
 
+*************************
+*3.6.- Túnel SSH Inverso*
+*************************
+
+Ejecuto el comando: 'ssh -R 9000:localhost:8888 fernando@192.168.1.33'.
+
+Lanzo romanserver en la máquina virtual en el puerto 8888.
+
+De este modo, en el host ejecuto el romanclient especificando el puerto 9000
+y funciona.
+
 ************
 *3.7.- Cron*
 ************
